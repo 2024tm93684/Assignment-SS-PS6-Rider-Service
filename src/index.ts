@@ -1,6 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import { connectDatabase } from './config/database';
+import riderRoutes from './routes/riderRoutes';
 
 dotenv.config();
 
@@ -18,6 +19,9 @@ app.get('/health', (req, res) => {
     timestamp: new Date().toISOString() 
   });
 });
+
+// API Routes
+app.use('/v1/riders', riderRoutes);
 
 // Initialize database connection and start server
 const startServer = async () => {
