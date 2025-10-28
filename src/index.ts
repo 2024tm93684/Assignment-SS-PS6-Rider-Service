@@ -2,6 +2,8 @@ import express from 'express';
 import dotenv from 'dotenv';
 import { connectDatabase } from './config/database';
 import riderRoutes from './routes/riderRoutes';
+import { errorHandler } from './middleware/errorHandler';
+import { notFound } from './middleware/notFound';
 
 dotenv.config();
 
@@ -12,7 +14,7 @@ const PORT = process.env.PORT || 3001;
 app.use(express.json());
 
 // Health check endpoint
-app.get('/health', (req, res) => {
+app.get('/health', (_, res) => {
   res.status(200).json({ 
     status: 'OK', 
     service: 'Rider Service',
@@ -22,6 +24,12 @@ app.get('/health', (req, res) => {
 
 // API Routes
 app.use('/v1/riders', riderRoutes);
+
+// 404 handler (must be after all routes)
+app.use(notFound);
+
+// Error handler (must be last)
+app.use(errorHandler);
 
 // Initialize database connection and start server
 const startServer = async () => {

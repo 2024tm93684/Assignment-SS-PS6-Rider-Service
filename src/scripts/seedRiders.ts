@@ -7,7 +7,7 @@ import { Rider } from '../models';
 dotenv.config();
 
 export function csvToArray<T = Record<string, string>>(fileName: string): T[] {
-    const filePath = path.join(__dirname, fileName);
+    const filePath = path.resolve('./src/scripts', fileName);
     const data = fs.readFileSync(filePath, 'utf-8');
   
     // Split the CSV content into lines and extract headers
