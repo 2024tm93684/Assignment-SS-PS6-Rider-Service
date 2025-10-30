@@ -23,11 +23,18 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install only production dependencies
-RUN npm ci --only=production
+# Install all dependencies (needed for ts-node seed script)
+RUN npm ci
 
 # Copy built files from builder stage
 COPY --from=builder /app/dist ./dist
+
+# Copy source files for seed script (needed for ts-node)
+COPY --from=builder /app/src ./src
+COPY --from=builder /app/package*.json ./
+
+# Copy seed data CSV file
+COPY src/scripts/rhfd_riders.csv ./src/scripts/
 
 # Expose port
 EXPOSE 3001

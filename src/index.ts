@@ -4,6 +4,7 @@ import { connectDatabase } from './config/database';
 import riderRoutes from './routes/riderRoutes';
 import { errorHandler } from './middleware/errorHandler';
 import { notFound } from './middleware/notFound';
+import { requestLogger } from './middleware/logger';
 
 dotenv.config();
 
@@ -12,13 +13,17 @@ const PORT = process.env.PORT || 3001;
 
 // Middleware
 app.use(express.json());
+app.use(requestLogger);
 
 // Health check endpoint
 app.get('/health', (_, res) => {
   res.status(200).json({ 
-    status: 'OK', 
+    status: 'OK',
     service: 'Rider Service',
-    timestamp: new Date().toISOString() 
+    version: '1.0.0',
+    uptime: process.uptime(),
+    timestamp: new Date().toISOString(),
+    environment: process.env.NODE_ENV || 'development'
   });
 });
 
