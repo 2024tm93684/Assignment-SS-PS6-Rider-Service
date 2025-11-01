@@ -1,6 +1,6 @@
 # Rider Service
 
-Rider Service is a microservice for managing rider profiles in a Ride-Hailing Platform. This service handles rider registration, profile management, and CRUD operations.
+Rider Service is a microservice for managing rider profiles in a Ride-Hailing Platform Assignment. This service handles rider registration, profile management, and CRUD operations.
 
 ## Tech Stack
 
